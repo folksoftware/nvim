@@ -2,7 +2,7 @@
   <img src="https://github.com/folksoftware/nvim/blob/master/crow.png"/>
 </p>
 
-Neovim colorschemes by [folk.lol](https://folk.lol) — **abraxas**, **ushirogami**, **snawfus**, **mandragola**, **zaratan**, **anqa**, and **tatzelwurm**.
+Neovim colorschemes by [folk.lol](https://folk.lol) — **abraxas**, **ushirogami**, **snawfus**, **mandragola**, **zaratan**, **anqa**, **tatzelwurm**, and **yurei**.
 
 ## How
 
@@ -33,6 +33,7 @@ Neovim colorschemes by [folk.lol](https://folk.lol) — **abraxas**, **ushirogam
 :colorscheme folk-zaratan
 :colorscheme folk-anqa
 :colorscheme folk-tatzelwurm
+:colorscheme folk-yurei
 
 " Or use the command
 :Folk abraxas
@@ -42,6 +43,7 @@ Neovim colorschemes by [folk.lol](https://folk.lol) — **abraxas**, **ushirogam
 :Folk zaratan
 :Folk anqa
 :Folk tatzelwurm
+:Folk yurei
 :Folk auto
 ```
 
