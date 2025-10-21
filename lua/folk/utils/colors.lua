@@ -1,7 +1,5 @@
 local M = {}
 
-local hsluv = require "folk.lib.hsluv"
-
 local function parse_hex(color)
 	color = color:lower()
 	local r, g, b = color:match("^#(%x%x)(%x%x)(%x%x)$")

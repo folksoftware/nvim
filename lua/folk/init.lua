@@ -121,7 +121,7 @@ local M = {
 		color_overrides = {},
 		highlight_overrides = {},
 	},
-	flavours = { abraxas = 1, ushirogami = 2, snawfus = 3, mandragola = 4, zaratan = 5 },
+	flavours = { abraxas = 1, ushirogami = 2, snawfus = 3, mandragola = 4, zaratan = 5, anqa = 6 },
 	path_sep = jit and (jit.os == "Windows" and "\\" or "/") or package.config:sub(1, 1),
 }
 
@@ -153,7 +153,7 @@ local function get_flavour(default)
 	if flavour and not M.flavours[flavour] then
 		vim.notify(
 			string.format(
-				"folk (error): Invalid flavour '%s', flavour must be 'abraxas', 'ushirogami', 'snawfus', 'mandragola', 'zaratan' or 'auto'",
+				"folk (error): Invalid flavour '%s', flavour must be 'abraxas', 'ushirogami', 'snawfus', 'mandragola', 'zaratan', 'anqa' or 'auto'",
 				flavour
 			),
 			vim.log.levels.ERROR
