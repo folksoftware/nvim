@@ -2,22 +2,20 @@
   <img src="https://github.com/folksoftware/nvim/blob/master/crow.png"/>
 </p>
 
-Neovim colorschemes by [folk.lol](https://folk.lol) — **abraxas**, **ushirogami**, **snawfus**, **mandragola**, **zaratan**, and **anqa**.
+Neovim colorschemes by [folk.lol](https://folk.lol) — **abraxas**, **ushirogami**, **snawfus**, **mandragola**, **zaratan**, **anqa**, and **tatzelwurm**.
 
 ## How
 
 **Add to your config:**
 
 ```lua
--- In your lazy.nvim setup (e.g., ~/.config/nvim/lua/plugins/theme.lua)
+-- In your lazy.nvim setup (e.g., ~/.config/nvim/init.lua)
 {
   "folksoftware/nvim",
   name = "folk",
   priority = 1000,
   config = function()
-    require("folk").setup({
-      flavour = "abraxas", -- or "ushirogami", "snawfus", "mandragola", "zaratan", "anqa", "auto"
-    })
+    require("folk").setup({ flavour = "abraxas" })
     vim.cmd.colorscheme "folk-abraxas"
   end
 }
@@ -34,6 +32,7 @@ Neovim colorschemes by [folk.lol](https://folk.lol) — **abraxas**, **ushirogam
 :colorscheme folk-mandragola
 :colorscheme folk-zaratan
 :colorscheme folk-anqa
+:colorscheme folk-tatzelwurm
 
 " Or use the command
 :Folk abraxas
@@ -42,6 +41,7 @@ Neovim colorschemes by [folk.lol](https://folk.lol) — **abraxas**, **ushirogam
 :Folk mandragola
 :Folk zaratan
 :Folk anqa
+:Folk tatzelwurm
 :Folk auto
 ```
 
