@@ -13,17 +13,17 @@ If you want to stay on nvim 0.7, pin folk tag to v0.2.4 and nvim-treesitter comm
 	end
 
 	local colors = { -- Reference: https://github.com/nvim-treesitter/nvim-treesitter/blob/master/CONTRIBUTING.md
-		-- Identifiers
+		-- Identifiers - don't highlight regular variables
 		["@variable"] = { fg = C.fg_primary, style = O.styles.variables or {} }, -- Any variable name that does not have another highlight.
-		["@variable.builtin"] = { fg = C.error, style = O.styles.properties or {} }, -- Variable names that are defined by the languages, like this or self.
-		["@variable.parameter"] = { fg = C.warning, style = O.styles.variables or {} }, -- For parameters of a function.
-		["@variable.member"] = { fg = C.info }, -- For fields.
+		["@variable.builtin"] = { fg = C.fg_primary, style = O.styles.properties or {} }, -- Variable names that are defined by the languages, like this or self.
+		["@variable.parameter"] = { fg = C.fg_primary, style = O.styles.variables or {} }, -- For parameters of a function.
+		["@variable.member"] = { fg = C.fg_primary }, -- For fields.
 
 		["@constant"] = { link = "Constant" }, -- For constants
 		["@constant.builtin"] = { fg = C.constant, style = O.styles.keywords or {} }, -- For constant that are built in the language: nil in Lua.
-		["@constant.macro"] = { link = "Macro" }, -- For constants that are defined by macros: NULL in C.
+		["@constant.macro"] = { link = "Constant" }, -- For constants that are defined by macros: NULL in C.
 
-		["@module"] = { fg = C.type, style = O.styles.miscs or { "italic" } }, -- For identifiers referring to modules and namespaces.
+		["@module"] = { fg = C.fg_primary, style = O.styles.miscs or {} }, -- For identifiers referring to modules and namespaces.
 		["@label"] = { link = "Label" }, -- For labels: label: in C and :label: in Lua.
 
 		-- Literals
@@ -46,49 +46,49 @@ If you want to stay on nvim 0.7, pin folk tag to v0.2.4 and nvim-treesitter comm
 
 		-- Types
 		["@type"] = { link = "Type" }, -- For types.
-		["@type.builtin"] = { fg = C.keyword, style = O.styles.properties or { "italic" } }, -- For builtin types.
+		["@type.builtin"] = { fg = C.fg_primary, style = O.styles.properties or {} }, -- For builtin types.
 		["@type.definition"] = { link = "Type" }, -- type definitions (e.g. `typedef` in C)
 
 		["@attribute"] = { link = "Constant" }, -- attribute annotations (e.g. Python decorators)
-		["@property"] = { fg = C.info, style = O.styles.properties or {} }, -- For fields, like accessing `bar` property on `foo.bar`. Overriden later for data languages and CSS.
+		["@property"] = { fg = C.fg_primary, style = O.styles.properties or {} }, -- For fields, like accessing `bar` property on `foo.bar`. Overriden later for data languages and CSS.
 
-		-- Functions
+		-- Functions - only highlight definitions, not calls
 		["@function"] = { link = "Function" }, -- For function (calls and definitions).
 		["@function.builtin"] = { fg = C.constant, style = O.styles.functions or {} }, -- For builtin functions: table.insert in Lua.
-		["@function.call"] = { link = "Function" }, -- function calls
-		["@function.macro"] = { fg = C.special, style = O.styles.functions or {} }, -- For macro defined functions (calls and definitions): each macro_rules in Rust.
+		["@function.call"] = { fg = C.fg_primary }, -- function calls - don't highlight
+		["@function.macro"] = { fg = C.fg_primary, style = O.styles.functions or {} }, -- For macro defined functions (calls and definitions): each macro_rules in Rust.
 
 		["@function.method"] = { link = "Function" }, -- For method definitions.
-		["@function.method.call"] = { link = "Function" }, -- For method calls.
+		["@function.method.call"] = { fg = C.fg_primary }, -- For method calls - don't highlight
 
-		["@constructor"] = { fg = C.type }, -- For constructor calls and definitions: = { } in Lua, and Java constructors.
-		["@operator"] = { link = "Operator" }, -- For any operator: +, but also -> and * in C.
+		["@constructor"] = { fg = C.fg_primary }, -- For constructor calls and definitions: = { } in Lua, and Java constructors.
+		["@operator"] = { fg = C.fg_primary }, -- For any operator: +, but also -> and * in C - don't highlight
 
-		-- Keywords
+		-- Keywords - don't highlight
 		["@keyword"] = { link = "Keyword" }, -- For keywords that don't fall in previous categories.
 		["@keyword.modifier"] = { link = "Keyword" }, -- For keywords modifying other constructs (e.g. `const`, `static`, `public`)
 		["@keyword.type"] = { link = "Keyword" }, -- For keywords describing composite types (e.g. `struct`, `enum`)
 		["@keyword.coroutine"] = { link = "Keyword" }, -- For keywords related to coroutines (e.g. `go` in Go, `async/await` in Python)
-		["@keyword.function"] = { fg = C.keyword, style = O.styles.keywords or {} }, -- For keywords used to define a function.
-		["@keyword.operator"] = { fg = C.keyword, style = O.styles.keywords or {} }, -- For new keyword operator
+		["@keyword.function"] = { fg = C.fg_primary, style = O.styles.keywords or {} }, -- For keywords used to define a function.
+		["@keyword.operator"] = { fg = C.fg_primary, style = O.styles.keywords or {} }, -- For new keyword operator
 		["@keyword.import"] = { link = "Include" }, -- For includes: #include in C, use or extern crate in Rust, or require in Lua.
 		["@keyword.repeat"] = { link = "Repeat" }, -- For keywords related to loops.
-		["@keyword.return"] = { fg = C.keyword, style = O.styles.keywords or {} },
+		["@keyword.return"] = { fg = C.fg_primary, style = O.styles.keywords or {} },
 		["@keyword.debug"] = { link = "Exception" }, -- For keywords related to debugging
 		["@keyword.exception"] = { link = "Exception" }, -- For exception related keywords.
 
 		["@keyword.conditional"] = { link = "Conditional" }, -- For keywords related to conditionnals.
-		["@keyword.conditional.ternary"] = { link = "Operator" }, -- For ternary operators (e.g. `?` / `:`)
+		["@keyword.conditional.ternary"] = { fg = C.fg_primary }, -- For ternary operators (e.g. `?` / `:`)
 
 		["@keyword.directive"] = { link = "PreProc" }, -- various preprocessor directives & shebangs
 		["@keyword.directive.define"] = { link = "Define" }, -- preprocessor definition directives
 		-- JS & derivative
-		["@keyword.export"] = { fg = C.keyword, style = O.styles.keywords },
+		["@keyword.export"] = { fg = C.fg_primary, style = O.styles.keywords },
 
-		-- Punctuation
+		-- Punctuation - dim to make names stand out
 		["@punctuation.delimiter"] = { link = "Delimiter" }, -- For delimiters (e.g. `;` / `.` / `,`).
-		["@punctuation.bracket"] = { fg = C.fg_comment }, -- For brackets and parenthesis.
-		["@punctuation.special"] = { link = "Special" }, -- For special punctuation that does not fall in the categories before (e.g. `{}` in string interpolation).
+		["@punctuation.bracket"] = { fg = C.fg_subtle }, -- For brackets and parenthesis - dimmed.
+		["@punctuation.special"] = { fg = C.fg_subtle }, -- For special punctuation that does not fall in the categories before (e.g. `{}` in string interpolation).
 
 		-- Comment
 		["@comment"] = { link = "Comment" },
@@ -102,22 +102,22 @@ If you want to stay on nvim 0.7, pin folk tag to v0.2.4 and nvim-treesitter comm
 
 		-- Markup
 		["@markup"] = { fg = C.fg_primary }, -- For strings considerated text in a markup language.
-		["@markup.strong"] = { fg = C.error, style = { "bold" } }, -- bold
-		["@markup.italic"] = { fg = C.error, style = { "italic" } }, -- italic
+		["@markup.strong"] = { fg = C.fg_primary, style = { "bold" } }, -- bold - keep styling but don't highlight
+		["@markup.italic"] = { fg = C.fg_primary, style = { "italic" } }, -- italic - keep styling but don't highlight
 		["@markup.strikethrough"] = { fg = C.fg_primary, style = { "strikethrough" } }, -- strikethrough text
 		["@markup.underline"] = { link = "Underlined" }, -- underlined text
 
 		["@markup.heading"] = { fg = C["function"] }, -- titles like: # Example
-		["@markup.heading.markdown"] = { style = { "bold" } }, -- bold headings in markdown, but not in HTML or other markup
+		["@markup.heading.markdown"] = {}, -- markdown headings inherit from @markup.heading
 
 		["@markup.math"] = { fg = C["function"] }, -- math environments (e.g. `$ ... $` in LaTeX)
 		["@markup.quote"] = { fg = C.special }, -- block quotes
 		["@markup.environment"] = { fg = C.special }, -- text environments of markup languages
 		["@markup.environment.name"] = { fg = C["function"] }, -- text indicating the type of an environment
 
-		["@markup.link"] = { fg = C.info }, -- text references, footnotes, citations, etc.
-		["@markup.link.label"] = { fg = C.info }, -- link, reference descriptions
-		["@markup.link.url"] = { fg = C["function"], style = { "italic", "underline" } }, -- urls, links and emails
+		["@markup.link"] = { fg = C["function"] }, -- text references, footnotes, citations, etc.
+		["@markup.link.label"] = { fg = C["function"] }, -- link, reference descriptions
+		["@markup.link.url"] = { fg = C["function"], style = { "underline" } }, -- urls, links and emails
 
 		["@markup.raw"] = { fg = C.string }, -- used for inline code in markdown and for doc in python (""")
 
@@ -133,8 +133,8 @@ If you want to stay on nvim 0.7, pin folk tag to v0.2.4 and nvim-treesitter comm
 		-- Tags
 		["@tag"] = { fg = C["function"] }, -- Tags like HTML tag names.
 		["@tag.builtin"] = { fg = C["function"] }, -- JSX tag names.
-		["@tag.attribute"] = { fg = C.type, style = O.styles.miscs or { "italic" } }, -- XML/HTML attributes (foo in foo="bar").
-		["@tag.delimiter"] = { fg = C.character }, -- Tag delimiter like < > /
+		["@tag.attribute"] = { fg = C.fg_primary, style = O.styles.miscs or {} }, -- XML/HTML attributes (foo in foo="bar").
+		["@tag.delimiter"] = { fg = C.fg_subtle }, -- Tag delimiter like < > / - dimmed
 
 		-- Misc
 		["@error"] = { link = "Error" },
@@ -142,8 +142,8 @@ If you want to stay on nvim 0.7, pin folk tag to v0.2.4 and nvim-treesitter comm
 		-- Language specific:
 
 		-- Bash
-		["@function.builtin.bash"] = { fg = C.error, style = O.styles.miscs or { "italic" } },
-		["@variable.parameter.bash"] = { fg = C.string },
+		["@function.builtin.bash"] = { fg = C.constant, style = O.styles.miscs or {} },
+		["@variable.parameter.bash"] = { fg = C.fg_primary },
 
 		-- markdown
 		["@markup.heading.1.markdown"] = { link = "rainbow1" },
@@ -156,12 +156,12 @@ If you want to stay on nvim 0.7, pin folk tag to v0.2.4 and nvim-treesitter comm
 		-- Java
 		["@constant.java"] = { fg = C.character },
 
-		-- CSS
+		-- CSS - properties are more important in CSS than in regular code
 		["@property.css"] = { fg = C["function"] },
 		["@property.scss"] = { fg = C["function"] },
-		["@property.id.css"] = { fg = C.type },
-		["@property.class.css"] = { fg = C.type },
-		["@type.css"] = { fg = C.info },
+		["@property.id.css"] = { fg = C["function"] },
+		["@property.class.css"] = { fg = C["function"] },
+		["@type.css"] = { fg = C.fg_primary },
 		["@type.tag.css"] = { fg = C["function"] },
 		["@string.plain.css"] = { fg = C.fg_primary },
 		["@number.css"] = { fg = C.constant },
@@ -170,39 +170,39 @@ If you want to stay on nvim 0.7, pin folk tag to v0.2.4 and nvim-treesitter comm
 		-- HTML
 		["@string.special.url.html"] = { fg = C.string }, -- Links in href, src attributes.
 		["@markup.link.label.html"] = { fg = C.fg_primary }, -- Text between <a></a> tags.
-		["@character.special.html"] = { fg = C.error }, -- Symbols such as &nbsp;.
+		["@character.special.html"] = { fg = C.constant }, -- Symbols such as &nbsp;.
 
 		-- Lua
 		["@constructor.lua"] = { link = "@punctuation.bracket" }, -- For constructor calls and definitions: = { } in Lua.
 
 		-- Python
-		["@constructor.python"] = { fg = C.operator }, -- __init__(), __new__().
+		["@constructor.python"] = { fg = C.fg_primary }, -- __init__(), __new__().
 
 		-- YAML
-		["@label.yaml"] = { fg = C.type }, -- Anchor and alias names.
+		["@label.yaml"] = { fg = C.fg_primary }, -- Anchor and alias names.
 
 		-- Ruby
-		["@string.special.symbol.ruby"] = { fg = C.variable },
+		["@string.special.symbol.ruby"] = { fg = C.constant },
 
 		-- PHP
 		["@function.method.php"] = { link = "Function" },
-		["@function.method.call.php"] = { link = "Function" },
+		["@function.method.call.php"] = { fg = C.fg_primary },
 
 		-- C/CPP
-		["@keyword.import.c"] = { fg = C.type },
-		["@keyword.import.cpp"] = { fg = C.type },
+		["@keyword.import.c"] = { fg = C.fg_primary },
+		["@keyword.import.cpp"] = { fg = C.fg_primary },
 
 		-- C#
-		["@attribute.c_sharp"] = { fg = C.type },
+		["@attribute.c_sharp"] = { link = "Constant" },
 
 		-- gitcommit
-		["@comment.warning.gitcommit"] = { fg = C.type },
+		["@comment.warning.gitcommit"] = { fg = C.fg_comment },
 
 		-- gitignore
 		["@string.special.path.gitignore"] = { fg = C.fg_primary },
 
 		-- Misc
-		gitcommitSummary = { fg = C.cursor, style = O.styles.miscs or { "italic" } },
+		gitcommitSummary = { fg = C.fg_primary, style = O.styles.miscs or {} },
 		zshKSHFunction = { link = "Function" },
 	}
 

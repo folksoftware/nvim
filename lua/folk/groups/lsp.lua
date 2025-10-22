@@ -10,7 +10,7 @@ function M.get()
 	local info = C.operator
 	local hint = C.character
 	local ok = C.string
-	local darkening_percentage = 0.095
+	local darkening_percentage = 0.002
 
 	return {
 		-- These groups are for the native LSP client. Some other LSP clients may
@@ -22,28 +22,28 @@ function M.get()
 		-- highlight diagnostics in numberline
 
 		DiagnosticVirtualTextError = {
-			bg = O.transparent_background and C.none or U.darken(error, darkening_percentage, C.bg_primary),
-			fg = error,
+			bg = C.border_subtle,
+			fg = C.fg_primary,
 			style = virtual_text.errors,
 		}, -- Used as the bg_elevated highlight group. Other Diagnostic highlights link to this by default
 		DiagnosticVirtualTextWarn = {
-			bg = O.transparent_background and C.none or U.darken(warning, darkening_percentage, C.bg_primary),
-			fg = warning,
+			bg = C.border_subtle,
+			fg = C.fg_primary,
 			style = virtual_text.warnings,
 		}, -- Used as the bg_elevated highlight group. Other Diagnostic highlights link to this by default
 		DiagnosticVirtualTextInfo = {
-			bg = O.transparent_background and C.none or U.darken(info, darkening_percentage, C.bg_primary),
-			fg = info,
+			bg = C.border_subtle,
+			fg = C.fg_primary,
 			style = virtual_text.information,
 		}, -- Used as the bg_elevated highlight group. Other Diagnostic highlights link to this by default
 		DiagnosticVirtualTextHint = {
-			bg = O.transparent_background and C.none or U.darken(hint, darkening_percentage, C.bg_primary),
-			fg = hint,
+			bg = C.border_subtle,
+			fg = C.fg_primary,
 			style = virtual_text.hints,
 		}, -- Used as the bg_elevated highlight group. Other Diagnostic highlights link to this by default
 		DiagnosticVirtualTextOk = {
-			bg = O.transparent_background and C.none or U.darken(hint, darkening_percentage, C.bg_primary),
-			fg = ok,
+			bg = C.border_subtle,
+			fg = C.fg_primary,
 			style = virtual_text.ok,
 		}, -- Used as the bg_elevated highlight group. Other Diagnostic highlights link to this by default
 

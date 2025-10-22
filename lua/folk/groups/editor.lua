@@ -88,6 +88,10 @@ function M.get()
 		WinBar = { fg = C.cursor },
 		WinBarNC = { link = "WinBar" },
 		WinSeparator = { fg = O.transparent_background and C.border or C.bg_sunken },
+
+		-- Lazy.nvim
+		LazyButton = { bg = C.border_subtle, fg = C.fg_primary },
+		LazyButtonActive = { bg = C.border, fg = C.fg_primary, style = { "bold" } },
 	}
 end
 

@@ -2,38 +2,47 @@ local M = {}
 
 function M.get()
 	return {
+		-- Highlight only: strings, constants, comments, top-level definitions
 		Comment = { fg = C.fg_comment, style = O.styles.comments }, -- just comments
-		SpecialComment = { link = "Special" }, -- special things inside a comment
+		SpecialComment = { link = "Comment" }, -- special things inside a comment
+
+		-- Constants (numbers, booleans, built-in constants)
 		Constant = { fg = C.constant }, -- (preferred) any constant
-		String = { fg = C.string, style = O.styles.strings or {} }, -- a string constant: "this is a string"
-		Character = { fg = C.character }, --  a character constant: 'c', '\n'
 		Number = { fg = C.constant, style = O.styles.numbers or {} }, --   a number constant: 234, 0xff
 		Float = { link = "Number" }, --    a floating point constant: 2.3e10
 		Boolean = { fg = C.constant, style = O.styles.booleans or {} }, --  a boolean constant: TRUE, false
-		Identifier = { fg = C.variable, style = O.styles.variables or {} }, -- (preferred) any variable name
-		Function = { fg = C["function"], style = O.styles.functions or {} }, -- function name (also: methods for classes)
-		Statement = { fg = C.keyword }, -- (preferred) any statement
-		Conditional = { fg = C.keyword, style = O.styles.conditionals or {} }, --  if, then, else, endif, switch, etc.
-		Repeat = { fg = C.keyword, style = O.styles.loops or {} }, --   for, do, while, etc.
-		Label = { fg = C.label }, --    case, default, etc.
-		Operator = { fg = C.operator, style = O.styles.operators or {} }, -- "sizeof", "+", "*", etc.
-		Keyword = { fg = C.keyword, style = O.styles.keywords or {} }, --  any other keyword
-		Exception = { fg = C.keyword, style = O.styles.keywords or {} }, --  try, catch, throw
 
-		PreProc = { fg = C.special }, -- (preferred) generic Preprocessor
-		Include = { fg = C.keyword, style = O.styles.keywords or {} }, --  preprocessor #include
+		-- Strings
+		String = { fg = C.string, style = O.styles.strings or {} }, -- a string constant: "this is a string"
+		Character = { fg = C.string }, --  a character constant: 'c', '\n'
+
+		-- Top-level definitions only (not calls)
+		Function = { fg = C["function"], style = O.styles.functions or {} }, -- function name (also: methods for classes)
+
+		-- Don't highlight: keywords, operators, variables, function calls
+		Identifier = { fg = C.fg_primary, style = O.styles.variables or {} }, -- (preferred) any variable name
+		Statement = { fg = C.fg_primary }, -- (preferred) any statement
+		Conditional = { fg = C.fg_primary, style = O.styles.conditionals or {} }, --  if, then, else, endif, switch, etc.
+		Repeat = { fg = C.fg_primary, style = O.styles.loops or {} }, --   for, do, while, etc.
+		Label = { fg = C.fg_primary }, --    case, default, etc.
+		Operator = { fg = C.fg_primary, style = O.styles.operators or {} }, -- "sizeof", "+", "*", etc.
+		Keyword = { fg = C.fg_primary, style = O.styles.keywords or {} }, --  any other keyword
+		Exception = { fg = C.fg_primary, style = O.styles.keywords or {} }, --  try, catch, throw
+
+		PreProc = { fg = C.fg_primary }, -- (preferred) generic Preprocessor
+		Include = { fg = C.fg_primary, style = O.styles.keywords or {} }, --  preprocessor #include
 		Define = { link = "PreProc" }, -- preprocessor #define
-		Macro = { fg = C.keyword }, -- same as Define
+		Macro = { fg = C.fg_primary }, -- same as Define
 		PreCondit = { link = "PreProc" }, -- preprocessor #if, #else, #endif, etc.
 
-		StorageClass = { fg = C.type }, -- static, register, volatile, etc.
-		Structure = { fg = C.type }, --  struct, union, enum, etc.
-		Special = { fg = C.special }, -- (preferred) any special symbol
-		Type = { fg = C.type, style = O.styles.types or {} }, -- (preferred) int, long, char, etc.
+		StorageClass = { fg = C.fg_primary }, -- static, register, volatile, etc.
+		Structure = { fg = C.fg_primary }, --  struct, union, enum, etc.
+		Special = { fg = C.fg_primary }, -- (preferred) any special symbol
+		Type = { fg = C.fg_primary, style = O.styles.types or {} }, -- (preferred) int, long, char, etc.
 		Typedef = { link = "Type" }, --  A typedef
 		SpecialChar = { link = "Special" }, -- special character in a constant
-		Tag = { fg = C.info, style = { "bold" } }, -- you can use CTRL-] on this
-		Delimiter = { fg = C.fg_comment }, -- character that needs attention
+		Tag = { fg = C.info }, -- you can use CTRL-] on this
+		Delimiter = { fg = C.fg_subtle }, -- character that needs attention (dimmed)
 		Debug = { link = "Special" }, -- debugging statements
 
 		Underlined = { style = { "underline" } }, -- (preferred) text that stands out, HTML links
@@ -46,13 +55,13 @@ function M.get()
 		Todo = { bg = C.variable, fg = C.bg_primary, style = { "bold" } }, -- (preferred) anything that needs extra attention; mostly the keywords TODO FIXME and XXX
 		qfLineNr = { fg = C.type },
 		qfFileName = { fg = C["function"] },
-		htmlH1 = { fg = C.special, style = { "bold" } },
-		htmlH2 = { fg = C["function"], style = { "bold" } },
+		htmlH1 = { fg = C.special },
+		htmlH2 = { fg = C["function"] },
 		-- mkdHeading = { fg = C.constant, style = { "bold" } },
 		-- mkdCode = { bg = C.terminal_black, fg = C.fg_primary },
 		mkdCodeDelimiter = { bg = C.bg_primary, fg = C.fg_primary },
-		mkdCodeStart = { fg = C.variable, style = { "bold" } },
-		mkdCodeEnd = { fg = C.variable, style = { "bold" } },
+		mkdCodeStart = { fg = C.string },
+		mkdCodeEnd = { fg = C.string },
 		-- mkdLink = { fg = C["function"], style = { "underline" } },
 
 		-- debugging
@@ -109,9 +118,9 @@ function M.get()
 		csvCol8 = { fg = C.special },
 
 		-- markdown
-		markdownHeadingDelimiter = { fg = C.constant, style = { "bold" } },
-		markdownCode = { fg = C.variable },
-		markdownCodeBlock = { fg = C.variable },
+		markdownHeadingDelimiter = { fg = C.constant },
+		markdownCode = { fg = C.string },
+		markdownCodeBlock = { fg = C.string },
 		markdownLinkText = { fg = C["function"], style = { "underline" } },
 		markdownH1 = { link = "rainbow1" },
 		markdownH2 = { link = "rainbow2" },
