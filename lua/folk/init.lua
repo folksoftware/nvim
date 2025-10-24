@@ -241,27 +241,29 @@ end
 
 if is_vim then return M end
 
-vim.api.nvim_create_user_command(
-	"Folk",
-	function(inp) vim.api.nvim_command("colorscheme folk-" .. get_flavour(inp.args)) end,
-	{
-		nargs = 1,
-		complete = function(line)
-			local options = vim.tbl_keys(M.flavours)
-			table.insert(options, "auto")
-			return vim.tbl_filter(function(val) return vim.startswith(val, line) end, options)
-		end,
-	}
-)
+if vim.g.folk_debug then
+	vim.api.nvim_create_user_command(
+		"Folk",
+		function(inp) vim.api.nvim_command("colorscheme folk-" .. get_flavour(inp.args)) end,
+		{
+			nargs = 1,
+			complete = function(line)
+				local options = vim.tbl_keys(M.flavours)
+				table.insert(options, "auto")
+				return vim.tbl_filter(function(val) return vim.startswith(val, line) end, options)
+			end,
+		}
+	)
 
-vim.api.nvim_create_user_command("FolkCompile", function()
-	for name, _ in pairs(package.loaded) do
-		if name:match "^folk." then package.loaded[name] = nil end
-	end
-	M.compile()
-	vim.notify("folk (info): compiled cache!", vim.log.levels.INFO)
-	vim.cmd.colorscheme "folk"
-end, {})
+	vim.api.nvim_create_user_command("FolkCompile", function()
+		for name, _ in pairs(package.loaded) do
+			if name:match "^folk." then package.loaded[name] = nil end
+		end
+		M.compile()
+		vim.notify("folk (info): compiled cache!", vim.log.levels.INFO)
+		vim.cmd.colorscheme "folk"
+	end, {})
+end
 
 if vim.g.folk_debug then
 	vim.api.nvim_create_autocmd("BufWritePost", {
